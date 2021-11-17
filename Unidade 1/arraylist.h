@@ -1,3 +1,5 @@
+// Discente: Luiz Henrique Araújo Dantas
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -16,15 +18,17 @@ struct arraylist* inicializar(int capacidade) {
 }
 
 int obterElementoEmPosicao(struct arraylist* lista, int posicao) {
-    if (posicao > 0 && posicao < lista->qtdade) {
+    if (posicao >= 0 && posicao < lista->qtdade) {
         return lista->vetor[posicao];
     }
     return 0;
 }
 
 void duplicarCapacidade(struct arraylist* lista) {
-    lista->vetor = (int*)realloc((lista->vetor), 2 * lista->capacidade * sizeof(int));
+    // Duplicando a lista diretamente
+    lista->vetor = (int*)realloc(lista->vetor, 2 * lista->capacidade * sizeof(int));
     lista->capacidade = lista->capacidade * 2;
+
 }
 
 void inserirElementoNoFim(struct arraylist* lista, int valor) {
@@ -60,13 +64,14 @@ void removerElementoNoFim(struct arraylist* lista) {
 }
 
 void removerElementoEmPosicao(struct arraylist* lista, int posicao) {
-    if (posicao > 0 && posicao < lista->qtdade) {
-        for (int i = posicao; i < lista->qtdade - 1; i++) {
-            lista->vetor[i] = lista->vetor[i + 1];
+    if (posicao >= 0 && posicao < lista->qtdade) {  
+// função responsável por rastrear um elemento em uma determinada posição e removê-lo.
+        while (posicao < lista->qtdade - 1) {
+            lista->vetor[posicao] = lista->vetor[posicao + 1];
+            posicao++;
         }
         lista->qtdade--;
     }
-
 }
 
 void exibirLista(struct arraylist* lista) {
